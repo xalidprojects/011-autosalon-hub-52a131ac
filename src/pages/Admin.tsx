@@ -31,25 +31,25 @@ export default function Admin() {
   const handleAddCar = (data: Omit<Car, 'id' | 'createdAt'>) => {
     addCar(data);
     setShowForm(false);
-    toast.success('Car added successfully');
+    toast.success('Avtomobil uğurla əlavə edildi');
   };
 
   const handleUpdateCar = (data: Omit<Car, 'id' | 'createdAt'>) => {
     if (editingCar) {
       updateCar(editingCar.id, data);
       setEditingCar(null);
-      toast.success('Car updated successfully');
+      toast.success('Avtomobil uğurla yeniləndi');
     }
   };
 
   const handleDeleteCar = (id: string) => {
     deleteCar(id);
-    toast.success('Car deleted successfully');
+    toast.success('Avtomobil uğurla silindi');
   };
 
   const handleReset = () => {
     resetToInitial();
-    toast.success('Data reset to initial state');
+    toast.success('Məlumat ilkin vəziyyətə qaytarıldı');
   };
 
   const handleCancel = () => {
@@ -65,9 +65,9 @@ export default function Admin() {
         {/* Header */}
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="font-display text-3xl font-bold">Admin Panel</h1>
+            <h1 className="font-display text-3xl font-bold">İdarəetmə Paneli</h1>
             <p className="mt-1 text-muted-foreground">
-              Manage your car listings
+              Avtomobil elanlarınızı idarə edin
             </p>
           </div>
           <div className="flex gap-3">
@@ -75,20 +75,20 @@ export default function Admin() {
               <AlertDialogTrigger asChild>
                 <Button variant="outline" size="sm">
                   <RotateCcw className="mr-2 h-4 w-4" />
-                  Reset Data
+                  Məlumatı sıfırla
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Reset All Data?</AlertDialogTitle>
+                  <AlertDialogTitle>Bütün məlumatları sıfırlayaq?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This will restore all cars to their initial state. Any cars you've added or modified will be lost.
+                    Bu bütün avtomobilləri ilkin vəziyyətinə qaytaracaq. Əlavə etdiyiniz və ya dəyişdirdiyiniz avtomobillər itiriləcək.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel>Ləğv et</AlertDialogCancel>
                   <AlertDialogAction onClick={handleReset}>
-                    Reset Data
+                    Sıfırla
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -97,7 +97,7 @@ export default function Admin() {
             {!showForm && !editingCar && (
               <Button onClick={() => setShowForm(true)}>
                 <Plus className="mr-2 h-4 w-4" />
-                Add Car
+                Avtomobil əlavə et
               </Button>
             )}
           </div>
@@ -108,7 +108,7 @@ export default function Admin() {
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="font-display">
-                {editingCar ? 'Edit Car' : 'Add New Car'}
+                {editingCar ? 'Avtomobili redaktə et' : 'Yeni avtomobil əlavə et'}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -126,7 +126,7 @@ export default function Admin() {
           <div className="mb-4 flex items-center gap-2">
             <CarIcon className="h-5 w-5 text-muted-foreground" />
             <h2 className="font-display text-xl font-semibold">
-              All Cars ({cars.length})
+              Bütün avtomobillər ({cars.length})
             </h2>
           </div>
 
@@ -142,13 +142,13 @@ export default function Admin() {
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
                   <CarIcon className="h-8 w-8 text-muted-foreground" />
                 </div>
-                <h3 className="mb-2 font-display text-lg font-semibold">No Cars Yet</h3>
+                <h3 className="mb-2 font-display text-lg font-semibold">Hələ avtomobil yoxdur</h3>
                 <p className="mb-4 text-muted-foreground">
-                  Add your first car listing to get started
+                  Başlamaq üçün ilk avtomobil elanınızı əlavə edin
                 </p>
                 <Button onClick={() => setShowForm(true)}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Add Your First Car
+                  İlk avtomobilinizi əlavə edin
                 </Button>
               </CardContent>
             </Card>
@@ -185,33 +185,33 @@ export default function Admin() {
                         disabled={!!editingCar || showForm}
                       >
                         <Pencil className="mr-1 h-4 w-4" />
-                        Edit
+                        Redaktə et
                       </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <Button
                             variant="outline"
                             size="sm"
-                            className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                          className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
                           >
                             <Trash2 className="mr-1 h-4 w-4" />
-                            Delete
+                            Sil
                           </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Delete Car?</AlertDialogTitle>
+                            <AlertDialogTitle>Avtomobili siləsiniz?</AlertDialogTitle>
                             <AlertDialogDescription>
-                              This will permanently delete {car.make} {car.model}. This action cannot be undone.
+                              Bu {car.make} {car.model} avtomobilini həmişəlik siləcək. Bu əməliyyat geri qaytarıla bilməz.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogCancel>Ləğv et</AlertDialogCancel>
                             <AlertDialogAction
                               onClick={() => handleDeleteCar(car.id)}
                               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                             >
-                              Delete
+                              Sil
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
@@ -229,7 +229,7 @@ export default function Admin() {
       <footer className="border-t border-border bg-card py-8">
         <div className="container text-center">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} 011 Autosalon. All rights reserved.
+            © {new Date().getFullYear()} 011 Autosalon. Bütün hüquqlar qorunur.
           </p>
         </div>
       </footer>
