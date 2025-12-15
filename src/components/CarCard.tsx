@@ -20,10 +20,10 @@ export function CarCard({ car, className }: CarCardProps) {
 
   const getFuelLabel = (fuel: string) => {
     const labels: Record<string, string> = {
-      gasoline: 'Gasoline',
-      diesel: 'Diesel',
-      hybrid: 'Hybrid',
-      electric: 'Electric',
+      gasoline: 'Benzin',
+      diesel: 'Dizel',
+      hybrid: 'Hibrid',
+      electric: 'Elektrik',
     };
     return labels[fuel] || fuel;
   };

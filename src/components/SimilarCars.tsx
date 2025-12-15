@@ -22,7 +22,7 @@ export function SimilarCars({ currentCar, allCars }: SimilarCarsProps) {
 
   return (
     <section className="mt-12">
-      <h2 className="mb-6 font-display text-2xl font-semibold">Similar Cars</h2>
+      <h2 className="mb-6 font-display text-2xl font-semibold">Oxşar avtomobillər</h2>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {similar.map((car) => (
           <CarCard key={car.id} car={car} />

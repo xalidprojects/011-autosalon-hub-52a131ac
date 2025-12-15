@@ -89,16 +89,16 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
   const validate = () => {
     const newErrors: Record<string, string> = {};
     
-    if (!formData.make.trim()) newErrors.make = 'Make is required';
-    if (!formData.model.trim()) newErrors.model = 'Model is required';
+    if (!formData.make.trim()) newErrors.make = 'Marka tələb olunur';
+    if (!formData.model.trim()) newErrors.model = 'Model tələb olunur';
     if (formData.year < 1900 || formData.year > new Date().getFullYear() + 1) {
-      newErrors.year = 'Invalid year';
+      newErrors.year = 'Yanlış il';
     }
-    if (formData.priceAzn <= 0) newErrors.priceAzn = 'Price must be positive';
-    if (!formData.city.trim()) newErrors.city = 'City is required';
-    if (!formData.engine.trim()) newErrors.engine = 'Engine is required';
+    if (formData.priceAzn <= 0) newErrors.priceAzn = 'Qiymət müsbət olmalıdır';
+    if (!formData.city.trim()) newErrors.city = 'Şəhər tələb olunur';
+    if (!formData.engine.trim()) newErrors.engine = 'Mühərrik tələb olunur';
     if (formData.images.filter(img => img.trim()).length === 0) {
-      newErrors.images = 'At least one image URL is required';
+      newErrors.images = 'Ən azı bir şəkil tələb olunur';
     }
 
     setErrors(newErrors);
@@ -120,12 +120,12 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
       {/* Basic Info */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="make">Make *</Label>
+          <Label htmlFor="make">Marka *</Label>
           <Input
             id="make"
             value={formData.make}
             onChange={(e) => updateField('make', e.target.value)}
-            placeholder="e.g., Mercedes-Benz"
+            placeholder="məs., Mercedes-Benz"
           />
           {errors.make && <p className="text-sm text-destructive">{errors.make}</p>}
         </div>
@@ -135,7 +135,7 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
             id="model"
             value={formData.model}
             onChange={(e) => updateField('model', e.target.value)}
-            placeholder="e.g., E-Class W213"
+            placeholder="məs., E-Class W213"
           />
           {errors.model && <p className="text-sm text-destructive">{errors.model}</p>}
         </div>
@@ -143,7 +143,7 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="space-y-2">
-          <Label htmlFor="year">Year *</Label>
+          <Label htmlFor="year">İl *</Label>
           <Input
             id="year"
             type="number"
@@ -155,7 +155,7 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
           {errors.year && <p className="text-sm text-destructive">{errors.year}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="price">Price (AZN) *</Label>
+          <Label htmlFor="price">Qiymət (AZN) *</Label>
           <Input
             id="price"
             type="number"
@@ -166,7 +166,7 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
           {errors.priceAzn && <p className="text-sm text-destructive">{errors.priceAzn}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="mileage">Mileage (km)</Label>
+          <Label htmlFor="mileage">Yürüş (km)</Label>
           <Input
             id="mileage"
             type="number"
@@ -179,22 +179,22 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="city">City *</Label>
+          <Label htmlFor="city">Şəhər *</Label>
           <Input
             id="city"
             value={formData.city}
             onChange={(e) => updateField('city', e.target.value)}
-            placeholder="e.g., Baku"
+            placeholder="məs., Bakı"
           />
           {errors.city && <p className="text-sm text-destructive">{errors.city}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="engine">Engine *</Label>
+          <Label htmlFor="engine">Mühərrik *</Label>
           <Input
             id="engine"
             value={formData.engine}
             onChange={(e) => updateField('engine', e.target.value)}
-            placeholder="e.g., 2.0L Turbo"
+            placeholder="məs., 2.0L Turbo"
           />
           {errors.engine && <p className="text-sm text-destructive">{errors.engine}</p>}
         </div>
@@ -202,7 +202,7 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label>Fuel Type</Label>
+          <Label>Yanacaq növü</Label>
           <Select
             value={formData.fuelType}
             onValueChange={(value: Car['fuelType']) => updateField('fuelType', value)}
@@ -211,15 +211,15 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="gasoline">Gasoline</SelectItem>
-              <SelectItem value="diesel">Diesel</SelectItem>
-              <SelectItem value="hybrid">Hybrid</SelectItem>
-              <SelectItem value="electric">Electric</SelectItem>
+              <SelectItem value="gasoline">Benzin</SelectItem>
+              <SelectItem value="diesel">Dizel</SelectItem>
+              <SelectItem value="hybrid">Hibrid</SelectItem>
+              <SelectItem value="electric">Elektrik</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <div className="space-y-2">
-          <Label>Transmission</Label>
+          <Label>Sürətlər qutusu</Label>
           <Select
             value={formData.transmission}
             onValueChange={(value: Car['transmission']) => updateField('transmission', value)}
@@ -228,8 +228,8 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="automatic">Automatic</SelectItem>
-              <SelectItem value="manual">Manual</SelectItem>
+              <SelectItem value="automatic">Avtomat</SelectItem>
+              <SelectItem value="manual">Mexaniki</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -238,34 +238,34 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
       {/* Optional Fields */}
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="space-y-2">
-          <Label htmlFor="color">Color</Label>
+          <Label htmlFor="color">Rəng</Label>
           <Input
             id="color"
             value={formData.color || ''}
             onChange={(e) => updateField('color', e.target.value)}
-            placeholder="e.g., Black"
+            placeholder="məs., Qara"
           />
         </div>
         <div className="space-y-2">
-          <Label>Drivetrain</Label>
+          <Label>Ötürmə</Label>
           <Select
             value={formData.drivetrain || 'none'}
             onValueChange={(value) => updateField('drivetrain', value === 'none' ? undefined : value as Car['drivetrain'])}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Select drivetrain" />
+              <SelectValue placeholder="Ötürmə seçin" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="none">Not specified</SelectItem>
-              <SelectItem value="FWD">FWD</SelectItem>
-              <SelectItem value="RWD">RWD</SelectItem>
-              <SelectItem value="AWD">AWD</SelectItem>
-              <SelectItem value="4WD">4WD</SelectItem>
+              <SelectItem value="none">Qeyd edilməyib</SelectItem>
+              <SelectItem value="FWD">Ön ötürmə</SelectItem>
+              <SelectItem value="RWD">Arxa ötürmə</SelectItem>
+              <SelectItem value="AWD">Tam ötürmə</SelectItem>
+              <SelectItem value="4WD">4x4</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="owners">Owners Count</Label>
+          <Label htmlFor="owners">Sahib sayı</Label>
           <Input
             id="owners"
             type="number"
@@ -277,22 +277,22 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="vin">VIN (optional)</Label>
+        <Label htmlFor="vin">VIN (ixtiyari)</Label>
         <Input
           id="vin"
           value={formData.vin || ''}
           onChange={(e) => updateField('vin', e.target.value)}
-          placeholder="Vehicle Identification Number"
+          placeholder="Avtomobilin identifikasiya nömrəsi"
         />
       </div>
 
       {/* Images */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <Label>Images *</Label>
+          <Label>Şəkillər *</Label>
           <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
             <Upload className="mr-1 h-4 w-4" />
-            Upload Images
+            Şəkil yüklə
           </Button>
           <input
             ref={fileInputRef}
@@ -332,19 +332,19 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
             onClick={() => fileInputRef.current?.click()}
           >
             <Upload className="mb-2 h-8 w-8" />
-            <p className="text-sm">Click to upload images</p>
+            <p className="text-sm">Şəkil yükləmək üçün klikləyin</p>
           </div>
         )}
       </div>
 
       {/* Description */}
       <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description">Təsvir</Label>
         <Textarea
           id="description"
           value={formData.description}
           onChange={(e) => updateField('description', e.target.value)}
-          placeholder="Enter car description..."
+          placeholder="Avtomobil haqqında məlumat daxil edin..."
           rows={4}
         />
       </div>
@@ -352,10 +352,10 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
       {/* Actions */}
       <div className="flex justify-end gap-3 border-t border-border pt-6">
         <Button type="button" variant="outline" onClick={onCancel}>
-          Cancel
+          Ləğv et
         </Button>
         <Button type="submit">
-          {car ? 'Update Car' : 'Add Car'}
+          {car ? 'Yenilə' : 'Əlavə et'}
         </Button>
       </div>
     </form>

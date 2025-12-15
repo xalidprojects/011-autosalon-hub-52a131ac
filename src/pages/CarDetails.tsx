@@ -37,10 +37,10 @@ export default function CarDetails() {
 
   const getFuelLabel = (fuel: string) => {
     const labels: Record<string, string> = {
-      gasoline: 'Gasoline',
-      diesel: 'Diesel',
-      hybrid: 'Hybrid',
-      electric: 'Electric',
+      gasoline: 'Benzin',
+      diesel: 'Dizel',
+      hybrid: 'Hibrid',
+      electric: 'Elektrik',
     };
     return labels[fuel] || fuel;
   };
@@ -50,7 +50,7 @@ export default function CarDetails() {
   };
 
   const handleWhatsApp = () => {
-    const message = encodeURIComponent(`Hi, I'm interested in the ${car?.make} ${car?.model} (${car?.year})`);
+    const message = encodeURIComponent(`Salam, ${car?.make} ${car?.model} (${car?.year}) ilə maraqlanıram`);
     window.open(`https://wa.me/994501234567?text=${message}`, '_blank');
   };
 
@@ -77,14 +77,14 @@ export default function CarDetails() {
           <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-muted">
             <Car className="h-10 w-10 text-muted-foreground" />
           </div>
-          <h1 className="mb-2 font-display text-2xl font-bold">Car Not Found</h1>
+          <h1 className="mb-2 font-display text-2xl font-bold">Avtomobil tapılmadı</h1>
           <p className="mb-6 text-muted-foreground">
-            The car you're looking for doesn't exist or has been removed.
+            Axtardığınız avtomobil mövcud deyil və ya silinib.
           </p>
           <Link to="/">
             <Button>
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Listings
+              Elanlara qayıt
             </Button>
           </Link>
         </div>
@@ -93,14 +93,14 @@ export default function CarDetails() {
   }
 
   const specs = [
-    { icon: Calendar, label: 'Year', value: car.year.toString() },
-    { icon: Gauge, label: 'Mileage', value: `${formatMileage(car.mileageKm)} km` },
-    { icon: Settings2, label: 'Engine', value: car.engine },
-    { icon: Fuel, label: 'Fuel', value: getFuelLabel(car.fuelType) },
-    { icon: Settings2, label: 'Transmission', value: car.transmission === 'automatic' ? 'Automatic' : 'Manual' },
-    ...(car.color ? [{ icon: Palette, label: 'Color', value: car.color }] : []),
-    ...(car.drivetrain ? [{ icon: Car, label: 'Drivetrain', value: car.drivetrain }] : []),
-    ...(car.ownersCount ? [{ icon: Users, label: 'Owners', value: car.ownersCount.toString() }] : []),
+    { icon: Calendar, label: 'İl', value: car.year.toString() },
+    { icon: Gauge, label: 'Yürüş', value: `${formatMileage(car.mileageKm)} km` },
+    { icon: Settings2, label: 'Mühərrik', value: car.engine },
+    { icon: Fuel, label: 'Yanacaq', value: getFuelLabel(car.fuelType) },
+    { icon: Settings2, label: 'Sürətlər qutusu', value: car.transmission === 'automatic' ? 'Avtomat' : 'Mexaniki' },
+    ...(car.color ? [{ icon: Palette, label: 'Rəng', value: car.color }] : []),
+    ...(car.drivetrain ? [{ icon: Car, label: 'Ötürmə', value: car.drivetrain }] : []),
+    ...(car.ownersCount ? [{ icon: Users, label: 'Sahiblər', value: car.ownersCount.toString() }] : []),
   ];
 
   return (
@@ -115,7 +115,7 @@ export default function CarDetails() {
           onClick={() => navigate(-1)}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Listings
+          Elanlara qayıt
         </Button>
 
         <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
@@ -126,15 +126,15 @@ export default function CarDetails() {
 
             {/* Description */}
             <section className="rounded-xl border border-border bg-card p-6">
-              <h2 className="mb-4 font-display text-xl font-semibold">Description</h2>
+              <h2 className="mb-4 font-display text-xl font-semibold">Təsvir</h2>
               <p className="leading-relaxed text-muted-foreground">
-                {car.description || 'No description available.'}
+                {car.description || 'Təsvir mövcud deyil.'}
               </p>
             </section>
 
             {/* Specifications */}
             <section className="rounded-xl border border-border bg-card p-6">
-              <h2 className="mb-4 font-display text-xl font-semibold">Specifications</h2>
+              <h2 className="mb-4 font-display text-xl font-semibold">Spesifikasiyalar</h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 {specs.map((spec) => (
                   <div key={spec.label} className="flex items-center gap-3">
@@ -178,7 +178,7 @@ export default function CarDetails() {
 
               {/* Price */}
               <div className="mb-6 rounded-lg bg-gradient-primary p-4 text-center">
-                <p className="text-sm font-medium text-primary-foreground/80">Price</p>
+                <p className="text-sm font-medium text-primary-foreground/80">Qiymət</p>
                 <p className="font-display text-3xl font-bold text-primary-foreground">
                   {formatPrice(car.priceAzn)} ₼
                 </p>
@@ -200,7 +200,7 @@ export default function CarDetails() {
                   onClick={handleCall}
                 >
                   <Phone className="mr-2 h-5 w-5" />
-                  Call Now
+                  İndi zəng et
                 </Button>
                 <Button
                   variant="outline"
@@ -216,7 +216,7 @@ export default function CarDetails() {
               {/* Contact Info */}
               <div className="mt-6 border-t border-border pt-4 text-center">
                 <p className="text-sm text-muted-foreground">
-                  Phone: <span className="font-medium text-foreground">+994 50 123 45 67</span>
+                  Telefon: <span className="font-medium text-foreground">+994 50 123 45 67</span>
                 </p>
               </div>
             </div>
@@ -231,7 +231,7 @@ export default function CarDetails() {
       <footer className="border-t border-border bg-card py-8">
         <div className="container text-center">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} 011 Autosalon. All rights reserved.
+            © {new Date().getFullYear()} 011 Autosalon. Bütün hüquqlar qorunur.
           </p>
         </div>
       </footer>

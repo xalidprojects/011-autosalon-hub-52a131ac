@@ -34,7 +34,7 @@ export function Header() {
               )}
             >
               <Car className="mr-2 h-4 w-4" />
-              Listings
+              Elanlar
             </Button>
           </Link>
           <Link to="/admin">
@@ -47,7 +47,7 @@ export function Header() {
               )}
             >
               <Settings className="mr-2 h-4 w-4" />
-              Admin
+              İdarəetmə
             </Button>
           </Link>
         </nav>
@@ -73,7 +73,7 @@ export function Header() {
                 className="w-full justify-start"
               >
                 <Car className="mr-2 h-4 w-4" />
-                Listings
+                Elanlar
               </Button>
             </Link>
             <Link to="/admin" onClick={() => setMobileMenuOpen(false)}>
@@ -82,7 +82,7 @@ export function Header() {
                 className="w-full justify-start"
               >
                 <Settings className="mr-2 h-4 w-4" />
-                Admin
+                İdarəetmə
               </Button>
             </Link>
           </nav>

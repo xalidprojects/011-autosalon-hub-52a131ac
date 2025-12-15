@@ -19,9 +19,9 @@ export function CarGrid({ cars, displayCount, onLoadMore }: CarGridProps) {
         <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-muted">
           <CarIcon className="h-10 w-10 text-muted-foreground" />
         </div>
-        <h3 className="mb-2 font-display text-xl font-semibold">No cars found</h3>
+        <h3 className="mb-2 font-display text-xl font-semibold">Avtomobil tapılmadı</h3>
         <p className="text-muted-foreground">
-          Try adjusting your filters or search criteria
+          Filterlər və ya axtarış meyarlarını dəyişdirməyə çalışın
         </p>
       </div>
     );
@@ -49,7 +49,7 @@ export function CarGrid({ cars, displayCount, onLoadMore }: CarGridProps) {
             onClick={onLoadMore}
             className="min-w-[200px]"
           >
-            Load More ({cars.length - displayCount} remaining)
+            Daha çox yüklə ({cars.length - displayCount} qalıb)
           </Button>
         </div>
       )}

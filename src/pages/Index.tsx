@@ -62,10 +62,10 @@ export default function Index() {
         {/* Hero Section */}
         <section className="mb-10 text-center">
           <h1 className="mb-3 font-display text-4xl font-bold tracking-tight md:text-5xl">
-            Find Your Perfect <span className="text-gradient">Car</span>
+            İdeal <span className="text-gradient">Avtomobilinizi</span> Tapın
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Browse our curated selection of premium vehicles. Quality cars, transparent pricing.
+            Premium avtomobil seçimimizi kəşf edin. Keyfiyyətli avtomobillər, şəffaf qiymətlər.
           </p>
         </section>
 
@@ -93,7 +93,7 @@ export default function Index() {
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Car className="h-4 w-4" />
             <span>
-              {filteredCars.length} {filteredCars.length === 1 ? 'car' : 'cars'} available
+              {filteredCars.length} {filteredCars.length === 1 ? 'avtomobil' : 'avtomobil'} mövcuddur
             </span>
           </div>
         </section>
@@ -121,7 +121,7 @@ export default function Index() {
       <footer className="border-t border-border bg-card py-8">
         <div className="container text-center">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} 011 Autosalon. All rights reserved.
+            © {new Date().getFullYear()} 011 Autosalon. Bütün hüquqlar qorunur.
           </p>
         </div>
       </footer>

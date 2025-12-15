@@ -33,7 +33,7 @@ function FilterContent({
     <div className="space-y-6">
       {/* Price Range */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-foreground">Price (AZN)</Label>
+        <Label className="text-sm font-medium text-foreground">Qiymət (AZN)</Label>
         <div className="grid grid-cols-2 gap-2">
           <Input
             type="number"
@@ -44,7 +44,7 @@ function FilterContent({
           />
           <Input
             type="number"
-            placeholder="Max"
+            placeholder="Maks"
             value={filters.priceMax ?? ''}
             onChange={(e) => onFilterChange('priceMax', parseNumber(e.target.value))}
             className="h-10"
@@ -54,11 +54,11 @@ function FilterContent({
 
       {/* Year Range */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-foreground">Year</Label>
+        <Label className="text-sm font-medium text-foreground">İl</Label>
         <div className="grid grid-cols-2 gap-2">
           <Input
             type="number"
-            placeholder="From"
+            placeholder="Dan"
             min={1990}
             max={currentYear}
             value={filters.yearMin ?? ''}
@@ -67,7 +67,7 @@ function FilterContent({
           />
           <Input
             type="number"
-            placeholder="To"
+            placeholder="Dək"
             min={1990}
             max={currentYear}
             value={filters.yearMax ?? ''}
@@ -79,7 +79,7 @@ function FilterContent({
 
       {/* Mileage Range */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-foreground">Mileage (km)</Label>
+        <Label className="text-sm font-medium text-foreground">Yürüş (km)</Label>
         <div className="grid grid-cols-2 gap-2">
           <Input
             type="number"
@@ -90,7 +90,7 @@ function FilterContent({
           />
           <Input
             type="number"
-            placeholder="Max"
+            placeholder="Maks"
             value={filters.mileageMax ?? ''}
             onChange={(e) => onFilterChange('mileageMax', parseNumber(e.target.value))}
             className="h-10"
@@ -100,38 +100,38 @@ function FilterContent({
 
       {/* Fuel Type */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-foreground">Fuel Type</Label>
+        <Label className="text-sm font-medium text-foreground">Yanacaq növü</Label>
         <Select
           value={filters.fuelType || 'all'}
           onValueChange={(value) => onFilterChange('fuelType', value === 'all' ? null : value)}
         >
           <SelectTrigger className="h-10">
-            <SelectValue placeholder="All fuel types" />
+            <SelectValue placeholder="Bütün yanacaq növləri" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All fuel types</SelectItem>
-            <SelectItem value="gasoline">Gasoline</SelectItem>
-            <SelectItem value="diesel">Diesel</SelectItem>
-            <SelectItem value="hybrid">Hybrid</SelectItem>
-            <SelectItem value="electric">Electric</SelectItem>
+            <SelectItem value="all">Bütün yanacaq növləri</SelectItem>
+            <SelectItem value="gasoline">Benzin</SelectItem>
+            <SelectItem value="diesel">Dizel</SelectItem>
+            <SelectItem value="hybrid">Hibrid</SelectItem>
+            <SelectItem value="electric">Elektrik</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       {/* Transmission */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-foreground">Transmission</Label>
+        <Label className="text-sm font-medium text-foreground">Sürətlər qutusu</Label>
         <Select
           value={filters.transmission || 'all'}
           onValueChange={(value) => onFilterChange('transmission', value === 'all' ? null : value)}
         >
           <SelectTrigger className="h-10">
-            <SelectValue placeholder="All transmissions" />
+            <SelectValue placeholder="Bütün sürətlər qutuları" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All transmissions</SelectItem>
-            <SelectItem value="automatic">Automatic</SelectItem>
-            <SelectItem value="manual">Manual</SelectItem>
+            <SelectItem value="all">Bütün sürətlər qutuları</SelectItem>
+            <SelectItem value="automatic">Avtomat</SelectItem>
+            <SelectItem value="manual">Mexaniki</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -143,7 +143,7 @@ function FilterContent({
         onClick={onReset}
       >
         <RotateCcw className="mr-2 h-4 w-4" />
-        Reset Filters
+        Filterləri sıfırla
       </Button>
     </div>
   );
@@ -155,7 +155,7 @@ export function FilterPanel({ filters, onFilterChange, onReset, activeFiltersCou
       <SheetTrigger asChild>
         <Button variant="outline">
           <Filter className="mr-2 h-4 w-4" />
-          Filters
+          Filterlər
           {activeFiltersCount > 0 && (
             <span className="ml-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
               {activeFiltersCount}
@@ -165,11 +165,11 @@ export function FilterPanel({ filters, onFilterChange, onReset, activeFiltersCou
       </SheetTrigger>
       <SheetContent side="left" className="w-80 overflow-y-auto">
         <SheetHeader className="mb-6">
-          <SheetTitle className="font-display text-lg">Filters</SheetTitle>
+          <SheetTitle className="font-display text-lg">Filterlər</SheetTitle>
         </SheetHeader>
         <FilterContent filters={filters} onFilterChange={onFilterChange} onReset={onReset} />
         <SheetClose asChild>
-          <Button className="mt-6 w-full">Apply Filters</Button>
+          <Button className="mt-6 w-full">Tətbiq et</Button>
         </SheetClose>
       </SheetContent>
     </Sheet>
