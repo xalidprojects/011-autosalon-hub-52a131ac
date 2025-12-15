@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Car } from '@/types/car';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { X, Plus, Image } from 'lucide-react';
+import { X, Plus, Upload } from 'lucide-react';
 
 interface CarFormProps {
   car?: Car;
@@ -23,7 +23,7 @@ const defaultFormData = {
   fuelType: 'gasoline' as const,
   transmission: 'automatic' as const,
   engine: '',
-  images: [''],
+  images: [] as string[],
   description: '',
   color: '',
   drivetrain: undefined as Car['drivetrain'],
@@ -34,6 +34,7 @@ const defaultFormData = {
 export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
   const [formData, setFormData] = useState(car ? { ...car } : defaultFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (car) {
@@ -51,21 +52,37 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
     }
   };
 
-  const addImageField = () => {
-    setFormData((prev) => ({ ...prev, images: [...prev.images, ''] }));
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    Array.from(files).forEach((file) => {
+      if (!file.type.startsWith('image/')) return;
+      
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64 = event.target?.result as string;
+        setFormData((prev) => ({
+          ...prev,
+          images: [...prev.images, base64],
+        }));
+        if (errors.images) {
+          setErrors((prev) => ({ ...prev, images: '' }));
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Reset input so same file can be selected again
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
-  const removeImageField = (index: number) => {
+  const removeImage = (index: number) => {
     setFormData((prev) => ({
       ...prev,
       images: prev.images.filter((_, i) => i !== index),
-    }));
-  };
-
-  const updateImage = (index: number, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      images: prev.images.map((img, i) => (i === index ? value : img)),
     }));
   };
 
@@ -272,39 +289,52 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
       {/* Images */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <Label>Image URLs *</Label>
-          <Button type="button" variant="outline" size="sm" onClick={addImageField}>
-            <Plus className="mr-1 h-4 w-4" />
-            Add Image
+          <Label>Images *</Label>
+          <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+            <Upload className="mr-1 h-4 w-4" />
+            Upload Images
           </Button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleFileUpload}
+            className="hidden"
+          />
         </div>
         {errors.images && <p className="text-sm text-destructive">{errors.images}</p>}
-        <div className="space-y-2">
-          {formData.images.map((image, index) => (
-            <div key={index} className="flex gap-2">
-              <div className="relative flex-1">
-                <Image className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  value={image}
-                  onChange={(e) => updateImage(index, e.target.value)}
-                  placeholder="https://example.com/image.jpg"
-                  className="pl-10"
+        
+        {formData.images.length > 0 ? (
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+            {formData.images.map((image, index) => (
+              <div key={index} className="group relative aspect-video overflow-hidden rounded-lg border border-border bg-muted">
+                <img
+                  src={image}
+                  alt={`Car image ${index + 1}`}
+                  className="h-full w-full object-cover"
                 />
-              </div>
-              {formData.images.length > 1 && (
                 <Button
                   type="button"
-                  variant="ghost"
+                  variant="destructive"
                   size="icon"
-                  onClick={() => removeImageField(index)}
-                  className="text-destructive hover:text-destructive"
+                  onClick={() => removeImage(index)}
+                  className="absolute right-1 top-1 h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-3 w-3" />
                 </Button>
-              )}
-            </div>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div 
+            className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-border p-8 text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Upload className="mb-2 h-8 w-8" />
+            <p className="text-sm">Click to upload images</p>
+          </div>
+        )}
       </div>
 
       {/* Description */}
