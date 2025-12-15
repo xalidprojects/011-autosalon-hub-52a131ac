@@ -98,36 +98,23 @@ export default function Index() {
           </div>
         </section>
 
-        {/* Main Content */}
-        <div className="flex gap-8">
-          {/* Desktop Filters */}
-          <FilterPanel
-            filters={filters}
-            onFilterChange={handleFilterChange}
-            onReset={handleResetFilters}
-            activeFiltersCount={activeFiltersCount}
+        {/* Car Grid */}
+        {isLoaded ? (
+          <CarGrid
+            cars={filteredCars}
+            displayCount={displayCount}
+            onLoadMore={handleLoadMore}
           />
-
-          {/* Car Grid */}
-          <div className="flex-1">
-            {isLoaded ? (
-              <CarGrid
-                cars={filteredCars}
-                displayCount={displayCount}
-                onLoadMore={handleLoadMore}
+        ) : (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="aspect-[4/3] animate-pulse rounded-xl bg-muted"
               />
-            ) : (
-              <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                {[...Array(6)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="aspect-[4/3] animate-pulse rounded-xl bg-muted"
-                  />
-                ))}
-              </div>
-            )}
+            ))}
           </div>
-        </div>
+        )}
       </main>
 
       {/* Footer */}

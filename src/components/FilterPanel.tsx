@@ -151,43 +151,27 @@ function FilterContent({
 
 export function FilterPanel({ filters, onFilterChange, onReset, activeFiltersCount }: FilterPanelProps) {
   return (
-    <>
-      {/* Desktop Filter Panel */}
-      <aside className="sticky top-20 hidden h-fit w-72 shrink-0 rounded-xl border border-border bg-card p-5 lg:block">
-        <div className="mb-5 flex items-center justify-between">
-          <h2 className="font-display text-lg font-semibold">Filters</h2>
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">
+          <Filter className="mr-2 h-4 w-4" />
+          Filters
           {activeFiltersCount > 0 && (
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
+            <span className="ml-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
               {activeFiltersCount}
             </span>
           )}
-        </div>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="left" className="w-80 overflow-y-auto">
+        <SheetHeader className="mb-6">
+          <SheetTitle className="font-display text-lg">Filters</SheetTitle>
+        </SheetHeader>
         <FilterContent filters={filters} onFilterChange={onFilterChange} onReset={onReset} />
-      </aside>
-
-      {/* Mobile Filter Sheet */}
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="outline" className="lg:hidden">
-            <Filter className="mr-2 h-4 w-4" />
-            Filters
-            {activeFiltersCount > 0 && (
-              <span className="ml-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
-                {activeFiltersCount}
-              </span>
-            )}
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="w-80 overflow-y-auto">
-          <SheetHeader className="mb-6">
-            <SheetTitle className="font-display text-lg">Filters</SheetTitle>
-          </SheetHeader>
-          <FilterContent filters={filters} onFilterChange={onFilterChange} onReset={onReset} />
-          <SheetClose asChild>
-            <Button className="mt-6 w-full">Apply Filters</Button>
-          </SheetClose>
-        </SheetContent>
-      </Sheet>
-    </>
+        <SheetClose asChild>
+          <Button className="mt-6 w-full">Apply Filters</Button>
+        </SheetClose>
+      </SheetContent>
+    </Sheet>
   );
 }
