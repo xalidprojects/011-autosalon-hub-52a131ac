@@ -75,6 +75,16 @@ export function useFilteredCars(
       );
     }
 
+    // Make filter
+    if (filters.make) {
+      filtered = filtered.filter(car => car.make === filters.make);
+    }
+
+    // Model filter
+    if (filters.model) {
+      filtered = filtered.filter(car => car.model === filters.model);
+    }
+
     // Price filter
     if (filters.priceMin !== null) {
       filtered = filtered.filter(car => car.priceAzn >= filters.priceMin!);

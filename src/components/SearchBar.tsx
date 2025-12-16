@@ -1,33 +1,49 @@
-import { Search, X } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { getAllMakes, getModelsByMake } from '@/data/carBrands';
 
 interface SearchBarProps {
-  value: string;
-  onChange: (value: string) => void;
+  make: string | null;
+  model: string | null;
+  onMakeChange: (value: string | null) => void;
+  onModelChange: (value: string | null) => void;
 }
 
-export function SearchBar({ value, onChange }: SearchBarProps) {
+export function SearchBar({ make, model, onMakeChange, onModelChange }: SearchBarProps) {
   return (
-    <div className="relative">
-      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-      <Input
-        type="text"
-        placeholder="Marka və ya model üzrə axtar..."
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="h-12 pl-10 pr-10 text-base"
-      />
-      {value && (
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2"
-          onClick={() => onChange('')}
-        >
-          <X className="h-4 w-4" />
-        </Button>
-      )}
+    <div className="flex flex-col gap-3 sm:flex-row">
+      <Select
+        value={make || 'all'}
+        onValueChange={(value) => {
+          onMakeChange(value === 'all' ? null : value);
+          onModelChange(null);
+        }}
+      >
+        <SelectTrigger className="h-12 w-full sm:w-48">
+          <SelectValue placeholder="Marka seçin" />
+        </SelectTrigger>
+        <SelectContent className="max-h-60">
+          <SelectItem value="all">Bütün markalar</SelectItem>
+          {getAllMakes().map((m) => (
+            <SelectItem key={m} value={m}>{m}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      
+      <Select
+        value={model || 'all'}
+        onValueChange={(value) => onModelChange(value === 'all' ? null : value)}
+        disabled={!make}
+      >
+        <SelectTrigger className="h-12 w-full sm:w-48">
+          <SelectValue placeholder="Model seçin" />
+        </SelectTrigger>
+        <SelectContent className="max-h-60">
+          <SelectItem value="all">Bütün modellər</SelectItem>
+          {make && getModelsByMake(make).map((m) => (
+            <SelectItem key={m} value={m}>{m}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }

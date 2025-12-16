@@ -5,7 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { X, Plus, Upload } from 'lucide-react';
+import { X, Upload } from 'lucide-react';
+import { getAllMakes, getModelsByMake } from '@/data/carBrands';
 
 interface CarFormProps {
   car?: Car;
@@ -121,22 +122,42 @@ export function CarForm({ car, onSubmit, onCancel }: CarFormProps) {
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="make">Marka *</Label>
-          <Input
-            id="make"
-            value={formData.make}
-            onChange={(e) => updateField('make', e.target.value)}
-            placeholder="məs., Mercedes-Benz"
-          />
+          <Select
+            value={formData.make || 'select'}
+            onValueChange={(value) => {
+              updateField('make', value === 'select' ? '' : value);
+              updateField('model', '');
+            }}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Marka seçin" />
+            </SelectTrigger>
+            <SelectContent className="max-h-60">
+              <SelectItem value="select">Marka seçin</SelectItem>
+              {getAllMakes().map((make) => (
+                <SelectItem key={make} value={make}>{make}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           {errors.make && <p className="text-sm text-destructive">{errors.make}</p>}
         </div>
         <div className="space-y-2">
           <Label htmlFor="model">Model *</Label>
-          <Input
-            id="model"
-            value={formData.model}
-            onChange={(e) => updateField('model', e.target.value)}
-            placeholder="məs., E-Class W213"
-          />
+          <Select
+            value={formData.model || 'select'}
+            onValueChange={(value) => updateField('model', value === 'select' ? '' : value)}
+            disabled={!formData.make}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Model seçin" />
+            </SelectTrigger>
+            <SelectContent className="max-h-60">
+              <SelectItem value="select">Model seçin</SelectItem>
+              {formData.make && getModelsByMake(formData.make).map((model) => (
+                <SelectItem key={model} value={model}>{model}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           {errors.model && <p className="text-sm text-destructive">{errors.model}</p>}
         </div>
       </div>

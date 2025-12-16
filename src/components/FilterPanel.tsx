@@ -3,8 +3,9 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { X, Filter, RotateCcw } from 'lucide-react';
+import { Filter, RotateCcw } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+import { getAllMakes, getModelsByMake } from '@/data/carBrands';
 
 interface FilterPanelProps {
   filters: Filters;
@@ -31,6 +32,48 @@ function FilterContent({
 
   return (
     <div className="space-y-6">
+      {/* Make */}
+      <div className="space-y-3">
+        <Label className="text-sm font-medium text-foreground">Marka</Label>
+        <Select
+          value={filters.make || 'all'}
+          onValueChange={(value) => {
+            onFilterChange('make', value === 'all' ? null : value);
+            onFilterChange('model', null);
+          }}
+        >
+          <SelectTrigger className="h-10">
+            <SelectValue placeholder="Bütün markalar" />
+          </SelectTrigger>
+          <SelectContent className="max-h-60">
+            <SelectItem value="all">Bütün markalar</SelectItem>
+            {getAllMakes().map((make) => (
+              <SelectItem key={make} value={make}>{make}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Model */}
+      <div className="space-y-3">
+        <Label className="text-sm font-medium text-foreground">Model</Label>
+        <Select
+          value={filters.model || 'all'}
+          onValueChange={(value) => onFilterChange('model', value === 'all' ? null : value)}
+          disabled={!filters.make}
+        >
+          <SelectTrigger className="h-10">
+            <SelectValue placeholder="Bütün modellər" />
+          </SelectTrigger>
+          <SelectContent className="max-h-60">
+            <SelectItem value="all">Bütün modellər</SelectItem>
+            {filters.make && getModelsByMake(filters.make).map((model) => (
+              <SelectItem key={model} value={model}>{model}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
       {/* Price Range */}
       <div className="space-y-3">
         <Label className="text-sm font-medium text-foreground">Qiymət (AZN)</Label>
