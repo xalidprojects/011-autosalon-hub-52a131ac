@@ -28,6 +28,14 @@ export function CarCard({ car, className }: CarCardProps) {
     return labels[fuel] || fuel;
   };
 
+  const getTransmissionLabel = (transmission: string) => {
+    const labels: Record<string, string> = {
+      automatic: 'Avtomat',
+      manual: 'Mexaniki',
+    };
+    return labels[transmission] || transmission;
+  };
+
   return (
     <Link
       to={`/cars/${car.id}`}
@@ -77,7 +85,7 @@ export function CarCard({ car, className }: CarCardProps) {
           </div>
           <div className="flex items-center gap-1.5">
             <Settings2 className="h-3.5 w-3.5" />
-            <span className="capitalize">{car.transmission}</span>
+            <span>{getTransmissionLabel(car.transmission)}</span>
           </div>
         </div>
 

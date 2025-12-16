@@ -12,6 +12,8 @@ const ITEMS_PER_PAGE = 9;
 
 const defaultFilters: Filters = {
   search: '',
+  make: null,
+  model: null,
   priceMin: null,
   priceMax: null,
   yearMin: null,
@@ -32,6 +34,8 @@ export default function Index() {
 
   const activeFiltersCount = useMemo(() => {
     let count = 0;
+    if (filters.make) count++;
+    if (filters.model) count++;
     if (filters.priceMin !== null || filters.priceMax !== null) count++;
     if (filters.yearMin !== null || filters.yearMax !== null) count++;
     if (filters.mileageMin !== null || filters.mileageMax !== null) count++;
@@ -55,7 +59,7 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-hero">
       <Header />
 
       <main className="container py-8">
@@ -71,11 +75,13 @@ export default function Index() {
 
         {/* Search and Controls */}
         <section className="mb-8 space-y-4">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="w-full max-w-md">
               <SearchBar
-                value={filters.search}
-                onChange={(value) => handleFilterChange('search', value)}
+                make={filters.make}
+                model={filters.model}
+                onMakeChange={(value) => handleFilterChange('make', value)}
+                onModelChange={(value) => handleFilterChange('model', value)}
               />
             </div>
             <div className="flex items-center gap-3">

@@ -22,6 +22,8 @@ export type SortOption = 'newest' | 'price-low' | 'price-high' | 'mileage-low';
 
 export interface Filters {
   search: string;
+  make: string | null;
+  model: string | null;
   priceMin: number | null;
   priceMax: number | null;
   yearMin: number | null;
